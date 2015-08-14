@@ -1,1 +1,1 @@
-from schiene.schiene import Schiene
+from .schiene import Schiene
