@@ -2,7 +2,7 @@ from distutils.core import setup
 setup(
   name = 'schiene',
   packages = ['schiene'],
-  version = '0.12',
+  version = '0.13',
   license = 'MIT',
   description = 'schiene is a Python library for interacting with Bahn.de',
   author = 'Kevin Kennell',
@@ -12,7 +12,7 @@ setup(
         'beautifulsoup4>=4.4.0'
   ],
   url = 'https://github.com/kevvvvv/schiene',
-  download_url = 'https://github.com/kevvvvv/schiene/tarball/0.12',
+  download_url = 'https://github.com/kevvvvv/schiene/tarball/0.13',
   keywords = ['bahn', 'api'],
   classifiers = [],
 )
