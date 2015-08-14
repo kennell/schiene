@@ -1,5 +1,7 @@
 # schiene
-schiene is a Python library for interacting with Bahn.de. Consider it a unofficial API client. 
+schiene is a Python library for interacting with Bahn.de. Consider it a unofficial API client.
+
+Note: the Bahn.de HTML code is a steaming pile of shit that can cause this library to break at any time. Do not use for any serious stuff.
 
 ## Install
 
