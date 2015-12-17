@@ -11,6 +11,12 @@ def parse_connections(html):
 
     for row in soup.find_all("td", class_="overview timelink")[1:]:
         columns = row.parent.find_all("td")
+
+        try:
+            price = columns[3].contents[3].string.strip().replace(',', '.')
+        except IndexError:
+            price = ''
+
         data = {
             'details': columns[0].a.get('href'),
             'departure': columns[0].a.contents[0].string,
@@ -18,7 +24,7 @@ def parse_connections(html):
             'transfers': int(columns[2].contents[0]),
             'time': columns[2].contents[2],
             'products': columns[3].contents[0].split(', '),
-            'price': columns[3].contents[3].string.strip().replace(',', '.')
+            'price': price
         }
 
         if data['price'] == "":
