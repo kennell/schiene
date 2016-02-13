@@ -9,7 +9,7 @@ def parse_connections(html):
     soup = BeautifulSoup(html, "lxml")
     connections = list()
 
-    for row in soup.find_all("td", class_="overview timelink")[1:]:
+    for row in soup.find_all("td", class_="overview timelink"):
         columns = row.parent.find_all("td")
 
         try:
