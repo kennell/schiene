@@ -11,8 +11,8 @@ setup(
         'requests>=2.7.0',
         'beautifulsoup4>=4.4.0'
   ],
-  url = 'https://github.com/kevvvvv/schiene',
-  download_url = 'https://github.com/kevvvvv/schiene/tarball/0.13',
+  url = 'https://github.com/kennell/schiene',
+  download_url = 'https://github.com/kennell/schiene/tarball/0.13',
   keywords = ['bahn', 'api'],
   classifiers = [],
 )
