@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 
 
 def parse_connections(html):
-    soup = BeautifulSoup(html, "lxml")
+    soup = BeautifulSoup(html, "html.parser")
     connections = list()
 
     for row in soup.find_all("td", class_="overview timelink"):
