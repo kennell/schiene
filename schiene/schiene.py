@@ -80,7 +80,7 @@ class Schiene():
         return parse_stations(rsp.text)
 
 
-    def connections(self, origin, destination, dt=datetime.now()):
+    def connections(self, origin, destination, dt=datetime.now(), only_direct=False):
         """
         Find connections between two stations
 
@@ -88,13 +88,15 @@ class Schiene():
             origin (str): origin station
             destination (str): destination station
             dt (datetime): date and time for query
+            only_direct (bool): only direct connections
         """
         query = {
             'S': origin,
             'Z': destination,
             'date': dt.strftime("%d.%m.%y"),
             'time': dt.strftime("%H:%M"),
-            'start': 1
+            'start': 1,
+            'REQ0JourneyProduct_opt0': 1 if only_direct else 0
         }
         rsp = requests.get('http://mobile.bahn.de/bin/mobil/query.exe/dox?', params=query)
         return parse_connections(rsp.text)
