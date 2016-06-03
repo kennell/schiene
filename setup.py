@@ -2,11 +2,11 @@ from distutils.core import setup
 setup(
   name = 'schiene',
   packages = ['schiene'],
-  version = '0.15',
+  version = '0.16',
   license = 'MIT',
   description = 'schiene is a Python library for interacting with Bahn.de',
   author = 'Kevin Kennell',
-  author_email = 'kevin@fileperms.org',
+  author_email = 'kevin@kennell.de',
   install_requires=[
         'requests>=2.7.0',
         'beautifulsoup4>=4.4.0'
