@@ -29,6 +29,9 @@ def parse_connections(html):
 
         if data['price'] == "":
             data['price'] = None
+        elif data['price'].startswith('ab'):
+            # example: ab 3,30 EUR
+            data['price'] = float(data['price'].split()[1])
         else:
             data['price'] = float(data['price'])
 
