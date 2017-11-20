@@ -5,8 +5,6 @@ schiene is a Python library for interacting with Bahn.de. Consider it a unoffici
 
 <sub>Note: if you do not need live information (delays etc.) you can use the new official [Fahrplan API](http://data.deutschebahn.com/apis/fahrplan/) from Deutsche Bahn. Also, the Bahn.de HTML code is a steaming pile of shit that can cause this library to break at any time. Do not use for any critical stuff.</sub>
 
-<sub>schiene was built during a Hackday event at [PhraseApp](https://phraseapp.com)</sub>
-
 ## Install
 
 ```
@@ -68,3 +66,8 @@ pip install schiene
 ## Projects using schiene
 
 * [Home Assistant](https://github.com/home-assistant/home-assistant)
+
+## Credits
+
+schiene was built during a Hackday event at [PhraseApp](https://phraseapp.com)
+
