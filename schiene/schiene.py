@@ -14,7 +14,7 @@ def parse_connections(html):
 
         try:
             price = columns[3].contents[3].string.strip().replace(',', '.')
-        except IndexError:
+        except:
             price = ''
 
         data = {
