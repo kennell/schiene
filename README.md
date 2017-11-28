@@ -1,8 +1,6 @@
 # 🚆 schiene
 schiene is a Python library for interacting with Bahn.de. Consider it a unofficial API client. This library uses **realtime,  live** information retrieved from Bahn.de and therefore contains information on delays, cancellations etc.
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/972771137462082930b9/maintainability)](https://codeclimate.com/github/kennell/schiene/maintainability)
-
 <sub>Note: if you do not need live information (delays etc.) you can use the new official [Fahrplan API](http://data.deutschebahn.com/apis/fahrplan/) from Deutsche Bahn. Also, the Bahn.de HTML code is a steaming pile of shit that can cause this library to break at any time. Do not use for any critical stuff.</sub>
 
 ## Install
