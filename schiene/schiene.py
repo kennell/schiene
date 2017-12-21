@@ -34,21 +34,13 @@ def parse_connections(html):
             data['ontime'] = True
         elif columns[1].find('span', class_="delay"):
             if hasattr(columns[1].contents[0], 'text'):
-                departure = datetime.strptime(data['departure'],
-                                              '%H:%M')
-                departure_delayed = datetime.strptime(columns[1].contents[0].text,
-                                                    '%H:%M')
-                diff = departure_delayed - departure
-                delay_departure = diff.total_seconds() // 60
+                delay_departure = calculate_delay(data['departure'],
+                                                  columns[1].contents[0].text)
             else:
                 delay_departure = 0
             if hasattr(columns[1].contents[2], 'text'):
-                arrival = datetime.strptime(data['arrival'],
-                                            '%H:%M')
-                arrival_delayed = datetime.strptime(columns[1].contents[2].text,
-                                                  '%H:%M')
-                diff =  arrival_delayed - arrival
-                delay_arrival = diff.total_seconds() // 60
+                delay_arrival = calculate_delay(data['arrival'],
+                                                columns[1].contents[2].text)
             else:
                 delay_arrival = 0
             data['delay'] = {
@@ -65,6 +57,15 @@ def parse_stations(html):
     html = html.replace('SLs.sls=', '').replace(';SLs.showSuggestion();', '')
     html = json.loads(html)
     return html['suggestions']
+
+def calculate_delay(original, delay):
+    """
+        Calculate the delay
+    """
+    original = datetime.strptime(original, '%H:%M')
+    delayed = datetime.strptime(delay, '%H:%M')
+    diff = delayed - original
+    return diff.total_seconds() // 60
 
 
 class Schiene():
