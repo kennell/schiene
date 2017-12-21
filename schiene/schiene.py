@@ -81,7 +81,7 @@ def parse_delay(data):
 
     # TODO: this should not be hardcoded!
     data['canceled'] = False
-    
+
     return data
 
 def calculate_delay(original, delay):
