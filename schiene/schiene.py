@@ -13,9 +13,10 @@ def parse_connections(html):
         columns = row.parent.find_all("td")
 
         try:
-            price = columns[3].contents[3].string.strip().replace(',', '.')
+            price_raw = columns[3].find("span", class_="bold").text.strip().replace(',', '.')
+            price = float(price_raw)
         except:
-            price = ''
+            price = None
 
         data = {
             'details': columns[0].a.get('href'),
@@ -26,14 +27,6 @@ def parse_connections(html):
             'products': columns[3].contents[0].split(', '),
             'price': price
         }
-
-        if data['price'] == "":
-            data['price'] = None
-        elif data['price'].startswith('ab'):
-            # example: ab 3,30 EUR
-            data['price'] = float(data['price'].split()[1])
-        else:
-            data['price'] = float(data['price'])
 
         if columns[1].find('img'):
             data['canceled'] = True
