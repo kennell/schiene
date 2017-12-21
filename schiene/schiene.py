@@ -28,25 +28,12 @@ def parse_connections(html):
             'price': price
         }
 
-        if columns[1].find('img'):
-            data['canceled'] = True
-        elif columns[1].find('span', class_="okmsg"):
+        if not columns[1].find('img') and not columns[1].find('span', class_='delay'):
             data['ontime'] = True
-        elif columns[1].find('span', class_="delay"):
-            if hasattr(columns[1].contents[0], 'text'):
-                delay_departure = calculate_delay(data['departure'],
-                                                  columns[1].contents[0].text)
-            else:
-                delay_departure = 0
-            if hasattr(columns[1].contents[2], 'text'):
-                delay_arrival = calculate_delay(data['arrival'],
-                                                columns[1].contents[2].text)
-            else:
-                delay_arrival = 0
-            data['delay'] = {
-                'delay_departure': int(delay_departure),
-                'delay_arrival': int(delay_arrival)
-            }
+            data['canceled'] = False
+        else:
+            data = parse_delay(data)
+
         connections.append(data)
     return connections
 
@@ -57,6 +44,45 @@ def parse_stations(html):
     html = html.replace('SLs.sls=', '').replace(';SLs.showSuggestion();', '')
     html = json.loads(html)
     return html['suggestions']
+
+def parse_delay(data):
+    """
+        Prase the delay
+    """
+    # parse data from the details view
+    rsp = requests.get(data['details'])
+    soup = BeautifulSoup(rsp.text, "html.parser")
+
+    # get departure delay
+    delay_departure_raw = soup.find('div', class_="routeStart").find('span', class_="delay")
+    if delay_departure_raw:
+        delay_departure = calculate_delay(data['departure'],
+                                          delay_departure_raw.text)
+    else:
+        delay_departure = 0
+
+    # get arrival delay
+    delay_arrival_raw = soup.find('div', class_="routeEnd").find('span', class_="delay")
+    if delay_arrival_raw:
+        delay_arrival = calculate_delay(data['arrival'],
+                                        delay_arrival_raw.text)
+    else:
+        delay_arrival = 0
+
+    # save the parsed data
+    if delay_departure + delay_arrival == 0:
+        data['ontime'] = True
+    else:
+        data['ontime'] = False
+    data['delay'] = {
+        'delay_departure': int(delay_departure),
+        'delay_arrival': int(delay_arrival)
+    }
+
+    # TODO: this should not be hardcoded!
+    data['canceled'] = False
+    
+    return data
 
 def calculate_delay(original, delay):
     """
