@@ -32,13 +32,23 @@ def parse_connections(html):
             data['canceled'] = True
         elif columns[1].find('span', class_="okmsg"):
             data['ontime'] = True
-        elif columns[1].find('span', class_="red"):
+        elif columns[1].find('span', class_="delay"):
             if hasattr(columns[1].contents[0], 'text'):
-                delay_departure = columns[1].contents[0].text.replace("ca. +", "")
+                departure = datetime.strptime(data['departure'],
+                                              '%H:%M')
+                departure_delayed = datetime.strptime(columns[1].contents[0].text,
+                                                    '%H:%M')
+                diff = departure_delayed - departure
+                delay_departure = diff.total_seconds() // 60
             else:
                 delay_departure = 0
             if hasattr(columns[1].contents[2], 'text'):
-                delay_arrival = columns[1].contents[2].text.replace("ca. +", "")
+                arrival = datetime.strptime(data['arrival'],
+                                            '%H:%M')
+                arrival_delayed = datetime.strptime(columns[1].contents[2].text,
+                                                  '%H:%M')
+                diff =  arrival_delayed - arrival
+                delay_arrival = diff.total_seconds() // 60
             else:
                 delay_arrival = 0
             data['delay'] = {
