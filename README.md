@@ -3,6 +3,14 @@ schiene is a Python library for interacting with Bahn.de. Consider it a unoffici
 
 <sub>Note: if you do not need live information (delays etc.) you can use the new official [Fahrplan API](http://data.deutschebahn.com/apis/fahrplan/) from Deutsche Bahn. Also, the Bahn.de HTML code is a steaming pile of shit that can cause this library to break at any time. Do not use for any critical stuff.</sub>
 
+## Donations
+
+Your contribution keeps this project going ❤️ 
+
+BTC 121QcrzmFsYfxpJYneTS4N6yKDdU8GGfXa
+ETH 0x56Aab3cDA7Ea02953aE394F9ffA3f7b80ed8b6DE
+LTC LerFT8YP7Q9etp2M3EsJxLZJYeFCZLV6wQ
+
 ## Install
 
 ```
