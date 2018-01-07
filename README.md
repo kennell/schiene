@@ -7,9 +7,9 @@ schiene is a Python library for interacting with Bahn.de. Consider it a unoffici
 
 Your contribution keeps this project going ❤️ 
 
-BTC 121QcrzmFsYfxpJYneTS4N6yKDdU8GGfXa
-ETH 0x56Aab3cDA7Ea02953aE394F9ffA3f7b80ed8b6DE
-LTC LerFT8YP7Q9etp2M3EsJxLZJYeFCZLV6wQ
+* BTC 121QcrzmFsYfxpJYneTS4N6yKDdU8GGfXa
+* ETH 0x56Aab3cDA7Ea02953aE394F9ffA3f7b80ed8b6DE
+* LTC LerFT8YP7Q9etp2M3EsJxLZJYeFCZLV6wQ
 
 ## Install
 
