@@ -13,9 +13,10 @@ def parse_connections(html):
         columns = row.parent.find_all("td")
 
         try:
-            price = columns[3].contents[3].string.strip().replace(',', '.')
+            price_raw = columns[3].find("span", class_="bold").text.strip().replace(',', '.')
+            price = float(price_raw)
         except:
-            price = ''
+            price = None
 
         data = {
             'details': columns[0].a.get('href'),
@@ -27,31 +28,12 @@ def parse_connections(html):
             'price': price
         }
 
-        if data['price'] == "":
-            data['price'] = None
-        elif data['price'].startswith('ab'):
-            # example: ab 3,30 EUR
-            data['price'] = float(data['price'].split()[1])
-        else:
-            data['price'] = float(data['price'])
-
-        if columns[1].find('img'):
-            data['canceled'] = True
-        elif columns[1].find('span', class_="okmsg"):
+        if not columns[1].find('img') and not columns[1].find('span', class_='delay'):
             data['ontime'] = True
-        elif columns[1].find('span', class_="red"):
-            if hasattr(columns[1].contents[0], 'text'):
-                delay_departure = columns[1].contents[0].text.replace("ca. +", "")
-            else:
-                delay_departure = 0
-            if hasattr(columns[1].contents[2], 'text'):
-                delay_arrival = columns[1].contents[2].text.replace("ca. +", "")
-            else:
-                delay_arrival = 0
-            data['delay'] = {
-                'delay_departure': int(delay_departure),
-                'delay_arrival': int(delay_arrival)
-            }
+            data['canceled'] = False
+        else:
+            data = parse_delay(data)
+
         connections.append(data)
     return connections
 
@@ -62,6 +44,54 @@ def parse_stations(html):
     html = html.replace('SLs.sls=', '').replace(';SLs.showSuggestion();', '')
     html = json.loads(html)
     return html['suggestions']
+
+def parse_delay(data):
+    """
+        Prase the delay
+    """
+    # parse data from the details view
+    rsp = requests.get(data['details'])
+    soup = BeautifulSoup(rsp.text, "html.parser")
+
+    # get departure delay
+    delay_departure_raw = soup.find('div', class_="routeStart").find('span', class_="delay")
+    if delay_departure_raw:
+        delay_departure = calculate_delay(data['departure'],
+                                          delay_departure_raw.text)
+    else:
+        delay_departure = 0
+
+    # get arrival delay
+    delay_arrival_raw = soup.find('div', class_="routeEnd").find('span', class_="delay")
+    if delay_arrival_raw:
+        delay_arrival = calculate_delay(data['arrival'],
+                                        delay_arrival_raw.text)
+    else:
+        delay_arrival = 0
+
+    # save the parsed data
+    if delay_departure + delay_arrival == 0:
+        data['ontime'] = True
+    else:
+        data['ontime'] = False
+    data['delay'] = {
+        'delay_departure': int(delay_departure),
+        'delay_arrival': int(delay_arrival)
+    }
+
+    # TODO: this should not be hardcoded!
+    data['canceled'] = False
+
+    return data
+
+def calculate_delay(original, delay):
+    """
+        Calculate the delay
+    """
+    original = datetime.strptime(original, '%H:%M')
+    delayed = datetime.strptime(delay, '%H:%M')
+    diff = delayed - original
+    return diff.total_seconds() // 60
 
 
 class Schiene():
