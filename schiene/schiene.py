@@ -28,7 +28,7 @@ def parse_connections(html):
             'price': price
         }
 
-        if not columns[1].find('img') and not columns[1].find('span', class_='delay'):
+        if not columns[1].find('img') and not columns[1].find('span', class_='delay') and not columns[1].find('span', class_='delayOnTime'):
             data['ontime'] = True
             data['canceled'] = False
         else:
@@ -54,7 +54,7 @@ def parse_delay(data):
     soup = BeautifulSoup(rsp.text, "html.parser")
 
     # get departure delay
-    delay_departure_raw = soup.find('div', class_="routeStart").find('span', class_="delay")
+    delay_departure_raw = soup.find('div', class_="routeStart").find('span', class_=["delay", "delayOnTime"])
     if delay_departure_raw:
         delay_departure = calculate_delay(data['departure'],
                                           delay_departure_raw.text)
@@ -62,7 +62,7 @@ def parse_delay(data):
         delay_departure = 0
 
     # get arrival delay
-    delay_arrival_raw = soup.find('div', class_="routeEnd").find('span', class_="delay")
+    delay_arrival_raw = soup.find('div', class_="routeEnd").find('span', class_=["delay", "delayOnTime"])
     if delay_arrival_raw:
         delay_arrival = calculate_delay(data['arrival'],
                                         delay_arrival_raw.text)
