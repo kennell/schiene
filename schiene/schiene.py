@@ -19,7 +19,7 @@ def parse_connections(html):
             price = None
 
         data = {
-            'details': columns[0].a.get('href'),
+            'details': columns[0].a.get('href').replace('!details=opened!', '!details=opened!detailsVerbund=opened!'),
             'departure': columns[0].a.contents[0].string,
             'arrival': columns[0].a.contents[2].string,
             'transfers': int(columns[2].contents[0]),
