@@ -2,7 +2,7 @@ from setuptools import setup
 setup(
   name = 'schiene',
   packages = ['schiene'],
-  version = '0.21',
+  version = '0.22',
   license = 'MIT',
   description = 'schiene is a Python library for interacting with Bahn.de',
   author = 'Kevin Kennell',
