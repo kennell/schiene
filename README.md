@@ -69,3 +69,6 @@ pip install schiene
 ## Projects using schiene
 
 * [Home Assistant](https://github.com/home-assistant/home-assistant)
+
+<sub>Create a pull request to add your project here</sub>
+
