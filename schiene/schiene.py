@@ -62,7 +62,7 @@ def parse_delay(data):
         delay_departure = 0
 
     # get arrival delay
-    delay_arrival_raw = soup.find('div', class_="routeEnd").find('span', class_=["delay", "delayOnTime"])
+    delay_arrival_raw = soup.find('div', class_=["routeEnd","routeEndAdditional"]).find('span', class_=["delay", "delayOnTime"])
     if delay_arrival_raw:
         delay_arrival = calculate_delay(data['arrival'],
                                         delay_arrival_raw.text)
