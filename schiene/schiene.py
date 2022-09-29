@@ -100,7 +100,12 @@ def calculate_delay(original, delay):
     """
     original = datetime.strptime(original, '%H:%M')
     delayed = datetime.strptime(delay, '%H:%M')
-    diff = delayed - original
+    # if the original time was before 0:00 and the delayed time is in the new day, we need to do a different calculation
+    if delay_departure < delay_arrival:
+        fullday = 86400
+        diff = fullday - original + delayed
+    else:
+        diff = delayed - original
     return diff.total_seconds() // 60
 
 
