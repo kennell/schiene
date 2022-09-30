@@ -50,7 +50,7 @@ def parse_delay(data):
         Prase the delay
     """
     # parse data from the details view
-    rsp = requests.get(data['details'])
+    rsp = requests.get(data['details'], timeout=10)
     soup = BeautifulSoup(rsp.text, "html.parser")
 
     # get departure delay
@@ -124,7 +124,7 @@ class Schiene():
             'S': station + '?',
             'REQ0JourneyStopsB': limit
         }
-        rsp = requests.get('http://reiseauskunft.bahn.de/bin/ajax-getstop.exe/dn', params=query)
+        rsp = requests.get('http://reiseauskunft.bahn.de/bin/ajax-getstop.exe/dn', params=query, timeout=10)
         return parse_stations(rsp.text)
 
 
@@ -146,5 +146,5 @@ class Schiene():
             'start': 1,
             'REQ0JourneyProduct_opt0': 1 if only_direct else 0
         }
-        rsp = requests.get('http://mobile.bahn.de/bin/mobil/query.exe/dox?', params=query)
+        rsp = requests.get('http://mobile.bahn.de/bin/mobil/query.exe/dox?', params=query, timeout=10)
         return parse_connections(rsp.text)
