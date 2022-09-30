@@ -69,6 +69,7 @@ pip install schiene
 ## Projects using schiene
 
 * [Home Assistant](https://github.com/home-assistant/home-assistant)
+* [Deutsche Bahn Home Assistant Sensor](https://github.com/FaserF/ha-deutschebahn)
 
 <sub>Create a pull request to add your project here</sub>
 
