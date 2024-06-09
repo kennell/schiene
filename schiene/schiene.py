@@ -3,6 +3,7 @@ import requests
 import json
 from datetime import datetime
 from bs4 import BeautifulSoup
+from urllib.parse import quote
 
 
 def parse_connections(html):
@@ -59,7 +60,7 @@ def parse_delay(data):
         delay_departure_raw= soup.find('div', class_="routeStart").find('span', class_=["delay", "delayOnTime"])
     except:
         pass
-        
+
     if delay_departure_raw:
         delay_departure = calculate_delay(data['departure'],
                                           delay_departure_raw.text)
@@ -121,7 +122,7 @@ class Schiene():
         """
         query = {
             'start': 1,
-            'S': station + '?',
+            'S': quote(station) + '?',
             'REQ0JourneyStopsB': limit
         }
         rsp = requests.get('http://reiseauskunft.bahn.de/bin/ajax-getstop.exe/dn', params=query)
